@@ -4,7 +4,7 @@ export async function handlePrice(req, res) {
     res.setHeader("Cache-control", "no-cache")
     res.setHeader("Connection", "keep-alive")
 
-    let price = (Math.random()*2000 + 1000)
+    let price = (Math.random()*130 + 4000)
 
     setInterval( () => {
         price += ((Math.random() - 0.5)*6)
