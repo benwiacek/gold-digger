@@ -8,9 +8,13 @@ export async function handlePrice(req, res) {
 
     setInterval( () => {
         price += ((Math.random() - 0.5)*6)
+        const options = { 
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
 
         res.write(
-            `data: ${JSON.stringify({price: price.toFixed(2)})}\n\n`
+            `data: ${JSON.stringify({price: price.toLocaleString('en-US', options)})}\n\n`
         )
 
     }, 3000)
