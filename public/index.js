@@ -36,12 +36,13 @@ investForm.addEventListener("submit", (e) => {
   	const goldAmount = investmentNumber / goldPriceNumber
 
   	summary.innerHTML = `You just bought ${goldAmount.toFixed(3)} ounces (ozt) for $${investmentNumber.toLocaleString('en-US', {maximumFractionDigits: 0})}.
-	You will receive documentation shortly.`
+	This sale is final. We are preparing documentation which you will receive shortly.`
 })
 
 const closeDialogBtn = document.getElementById("close-dialog-btn")
 
 closeDialogBtn.addEventListener("click", () => {
+	investForm.reset()
 	dialog.close()
 })
 
