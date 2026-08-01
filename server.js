@@ -6,6 +6,14 @@ const PORT = 8000
 
 const __dirname = import.meta.dirname
 
+export let price = (Math.random()*130 + 4000)
+console.log(`original price: ${price}`)
+
+setInterval( () => {
+    price += ((Math.random() - 0.5)*6)
+    console.log(`new price: ${price}`)
+}, 3000)
+
 const server = http.createServer( async (req, res) => {
 
     if(req.url === "/price") {
