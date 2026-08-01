@@ -1,0 +1,2 @@
+2026-08-01T05:50:37.989Z, amount paid: $10,000, price per Oz: $4,024.03, gold sold: 2.485 Oz.
+2026-08-01T05:50:42.985Z, amount paid: $500,000, price per Oz: $4,022.25, gold sold: 124.309 Oz.
