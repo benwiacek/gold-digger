@@ -5,6 +5,7 @@ import { price } from "../server.js"
 import { formatPrice } from "../public/formatPrice.js"
 import { formatGoldAmount } from "../public/formatGoldAmount.js"
 import { exportPDF } from "./exportPDF.js"
+import { sendEmailConfirm } from "./sendEmailConfirm.js"
 
 export async function handlePurchase(req, res) {
     
@@ -49,6 +50,8 @@ export async function handlePurchase(req, res) {
         }
 
         exportPDF(purchaseData)
+
+        sendEmailConfirm(purchaseData)
 
         res.statusCode = 201
         res.setHeader("Content-Type", "application/json")
