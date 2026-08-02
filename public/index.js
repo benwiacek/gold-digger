@@ -8,12 +8,9 @@ const eventSource = new EventSource("/price")
 const priceDisplay = document.getElementById("price-display")
 const connectionStatus = document.getElementById("connection-status")
 
-let goldPrice = ""
-
 eventSource.onmessage = (event) => {
     const data = JSON.parse(event.data)
     priceDisplay.textContent = data.price
-    goldPrice = data.price
     connectionStatus.textContent = "Live Price 🟢"
 }
 
@@ -34,11 +31,9 @@ investForm.addEventListener("submit", async function (e) {
 	e.preventDefault()
 	dialog.showModal()
 
-  	const goldPriceNumber = Number(goldPrice.replace(/,/g, ''))
   	const investmentNumber = Number(investment.value)
-  	const goldAmount = investmentNumber / goldPriceNumber
 
-	// --- Sending data back to server for purchase log and certificate ---
+	// --- Sending data back to server for purchase log and certificate, receiving ---
 
 	try {
 		const res = await fetch("/purchase", {
@@ -52,9 +47,24 @@ investForm.addEventListener("submit", async function (e) {
 		if(!res.ok) {
 			summary.innerHTML = "There was a problem with your purchase. Please try again."
 			console.error("Server Error:", res.statusText)
+
 		} else {
-			summary.innerHTML = `You just bought ${goldAmount.toFixed(3)} ounces (ozt) for $${investmentNumber.toLocaleString('en-US', {maximumFractionDigits: 0})}.
-			This sale is final. We are preparing documentation which you will receive shortly.`
+
+			const data = await res.json()
+			console.log(data)
+			const goldPriceNumber = data.finalGoldPrice
+  			const goldAmount = data.finalGoldAmount
+			console.log(data.finalGoldPrice)
+			console.log(data.finalGoldAmount)
+			const formattedGold = formatGoldAmount(goldAmount);
+
+			console.log("formattedGold:", formattedGold);
+
+			summary.innerHTML =
+				`You just bought ${formattedGold} of gold for $${formatPrice(investmentNumber)}.
+				This sale is final.`;
+
+			console.log(summary.innerHTML);
 		}
 
 	} catch (err) {

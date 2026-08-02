@@ -11,7 +11,7 @@ export async function handlePrice(req, res) {
         maximumFractionDigits: 2
     }
 
-    setInterval( () => {
+    let interval = setInterval( () => {
         res.write(
             `data: ${JSON.stringify({
                 event: "live gold price",
@@ -19,5 +19,9 @@ export async function handlePrice(req, res) {
             })}\n\n`
         )
     }, 3000)
+
+    req.on("close", () => {
+        clearInterval(interval)
+    })
 
 }

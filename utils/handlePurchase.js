@@ -35,9 +35,15 @@ export async function handlePurchase(req, res) {
             purchaseLog,
             "utf8"
         )
+
+        const purchaseData = {
+            finalGoldAmount: goldAmount,
+            finalGoldPrice: goldPriceNumber
+        }
+
         res.statusCode = 201
         res.setHeader("Content-Type", "application/json")
-        res.end(JSON.stringify(purchaseLog))
+        res.end(JSON.stringify(purchaseData))
 
     } catch (err) {
         res.statusCode = 400
