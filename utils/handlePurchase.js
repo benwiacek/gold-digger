@@ -12,6 +12,11 @@ export async function handlePurchase(req, res) {
 
         const goldPriceNumber = Number(price)
   	    const investmentNumber = Number(parsedBody)
+
+        if(!Number.isFinite(investmentNumber) || investmentNumber < 10 || investmentNumber > 1000000000000 ) {
+            throw new Error ("Error: there was an issue with the number.")
+        }
+
   	    const goldAmount = investmentNumber / goldPriceNumber
 
         const logArray = [
