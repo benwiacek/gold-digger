@@ -58,6 +58,20 @@ investForm.addEventListener("submit", async function (e) {
 			summary.innerHTML =
 				`You just bought ${formattedGold} of gold for $${formatPrice(investmentNumber)}.
 				This sale is final.`
+
+			const pdfBtn = document.getElementById("pdf-export-btn")
+
+			pdfBtn.addEventListener("click", () => {
+				const pdfUrl = `./receipts/GoldDigger_receipt_${(data.timestamp).replace(/[:.]/g, "-")}.pdf`
+
+				const link = document.createElement("a")
+				link.href = pdfUrl
+				link.download = `GoldDigger_receipt_${(data.timestamp).replace(/[:.]/g, "-")}.pdf`
+
+				document.body.appendChild(link)
+				link.click()
+				document.body.removeChild(link)
+			})
 		}
 
 	} catch (err) {

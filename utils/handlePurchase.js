@@ -38,15 +38,17 @@ export async function handlePurchase(req, res) {
             "utf8"
         )
 
+        const filePath = path.join("public", "receipts", `GoldDigger_receipt_${timestamp.replace(/[:.]/g, "-")}.pdf`)
+
         const purchaseData = {
             finalGoldAmount: goldAmount,
             finalGoldPrice: goldPriceNumber,
             investment: investmentNumber,
-            timestamp: timestamp
+            timestamp: timestamp,
+            receiptPath: filePath
         }
 
-        const filePath = path.join("public", "receipts", `Gold_purchase_${timestamp.replace(/[:.]/g, "-")}_receipt.pdf`)
-        exportPDF(filePath, purchaseData)
+        exportPDF(purchaseData)
 
         res.statusCode = 201
         res.setHeader("Content-Type", "application/json")

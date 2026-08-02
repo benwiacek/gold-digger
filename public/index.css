@@ -204,3 +204,8 @@ dialog button {
             #666);
     opacity: 0.50;
 }
+
+dialog #pdf-export-btn {
+    width: 75%;
+    margin-bottom: 20px;
+}

@@ -1,14 +1,30 @@
 import PDFDocument from "pdfkit"
 import fs from "node:fs"
+import path from "node:path"
 
 import { formatPrice } from "../public/formatPrice.js"
 import { formatGoldAmount } from "../public/formatGoldAmount.js"
 
-export function exportPDF(filename, data) {
+const imgPath = path.join("public", `gold.png`)
+
+export function exportPDF(data) {
 
     const receipt = new PDFDocument()
 
-    receipt.pipe(fs.createWriteStream(filename))
+    receipt.pipe(fs.createWriteStream(data.receiptPath))
+
+    receipt.font("Helvetica-Bold")
+        .fontSize(35)
+        .text("GoldDigger", {
+            align: "center"
+        })
+
+    receipt.image(imgPath, (receipt.page.width - 100) / 2, receipt.y, {
+        fit: [67, 50],
+        align: "center"
+    })
+
+    receipt.moveDown(2)
 
     receipt.font("Helvetica-Bold")
         .fontSize(24)
@@ -40,11 +56,11 @@ export function exportPDF(filename, data) {
 
     receipt.font("Helvetica-Oblique")
         .fontSize(16)
-        .text(`Date of transaction: ${data.timestamp.toLocaleString('en-US')}`)
+        .text(`Date of transaction: ${(data.timestamp).toLocaleString('en-US')}`)
 
     receipt.moveDown(1)
 
-    receipt.font("Helvetica-Oblique")
+    receipt.font("Helvetica")
         .fontSize(18)
         .text("This sale is final.")
 
