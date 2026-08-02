@@ -3,8 +3,6 @@ export function formatGoldAmount(number) {
     const options = { 
         maximumFractionDigits: 3
     }
-
-    console.log(`"original number": ${number}`)
  
     if(number < 32.1507 ) {
         return `${number.toLocaleString('en-US', options)} ounces (ozt)`

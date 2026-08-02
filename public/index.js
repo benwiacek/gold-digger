@@ -51,20 +51,13 @@ investForm.addEventListener("submit", async function (e) {
 		} else {
 
 			const data = await res.json()
-			console.log(data)
 			const goldPriceNumber = data.finalGoldPrice
   			const goldAmount = data.finalGoldAmount
-			console.log(data.finalGoldPrice)
-			console.log(data.finalGoldAmount)
 			const formattedGold = formatGoldAmount(goldAmount);
-
-			console.log("formattedGold:", formattedGold);
 
 			summary.innerHTML =
 				`You just bought ${formattedGold} of gold for $${formatPrice(investmentNumber)}.
-				This sale is final.`;
-
-			console.log(summary.innerHTML);
+				This sale is final.`
 		}
 
 	} catch (err) {
