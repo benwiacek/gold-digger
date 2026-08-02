@@ -2,6 +2,8 @@ import path from "node:path"
 import fs from "node:fs/promises"
 import { parseJSON } from "./parseJSON.js"
 import { price } from "../server.js"
+import { formatPrice } from "../public/formatPrice.js"
+import { formatGoldAmount } from "../public/formatGoldAmount.js"
 
 export async function handlePurchase(req, res) {
     
@@ -14,9 +16,9 @@ export async function handlePurchase(req, res) {
 
         const logArray = [
             `${new Date().toISOString()}`,
-            `amount paid: $${investmentNumber.toLocaleString('en-US', {maximumFractionDigits: 0})}`,
-            `price per Oz: $${goldPriceNumber.toLocaleString('en-US', {maximumFractionDigits: 2})}`,
-            `gold sold: ${goldAmount.toFixed(3)} Oz.`
+            `amount paid: $${formatPrice(investmentNumber)}`,
+            `price per Oz: $${formatPrice(goldPriceNumber)}`,
+            `gold sold: ${formatGoldAmount(goldAmount)}.`
         ]
 
         const purchaseLog = logArray.join(", ") + "\n"

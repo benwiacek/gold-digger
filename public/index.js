@@ -1,3 +1,6 @@
+import { formatPrice } from "./formatPrice.js"
+import { formatGoldAmount } from "./formatGoldAmount.js"
+
 // === LIVE-PRICE DISPLAY ===
 
 const eventSource = new EventSource("/price")
