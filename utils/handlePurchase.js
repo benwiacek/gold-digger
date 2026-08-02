@@ -4,6 +4,7 @@ import { parseJSON } from "./parseJSON.js"
 import { price } from "../server.js"
 import { formatPrice } from "../public/formatPrice.js"
 import { formatGoldAmount } from "../public/formatGoldAmount.js"
+import { exportPDF } from "./exportPDF.js"
 
 export async function handlePurchase(req, res) {
     
@@ -12,6 +13,7 @@ export async function handlePurchase(req, res) {
 
         const goldPriceNumber = Number(price)
   	    const investmentNumber = Number(parsedBody)
+        const timestamp = new Date().toISOString()
 
         if(!Number.isFinite(investmentNumber) || investmentNumber < 10 || investmentNumber > 1000000000000 ) {
             throw new Error ("Error: there was an issue with the number.")
@@ -20,7 +22,7 @@ export async function handlePurchase(req, res) {
   	    const goldAmount = investmentNumber / goldPriceNumber
 
         const logArray = [
-            `${new Date().toISOString()}`,
+            `${timestamp}`,
             `amount paid: $${formatPrice(investmentNumber)}`,
             `price per Oz: $${formatPrice(goldPriceNumber)}`,
             `gold sold: ${formatGoldAmount(goldAmount)}.`
@@ -38,8 +40,13 @@ export async function handlePurchase(req, res) {
 
         const purchaseData = {
             finalGoldAmount: goldAmount,
-            finalGoldPrice: goldPriceNumber
+            finalGoldPrice: goldPriceNumber,
+            investment: investmentNumber,
+            timestamp: timestamp
         }
+
+        const filePath = path.join("public", "receipts", `Gold_purchase_${timestamp.replace(/[:.]/g, "-")}_receipt.pdf`)
+        exportPDF(filePath, purchaseData)
 
         res.statusCode = 201
         res.setHeader("Content-Type", "application/json")

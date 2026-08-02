@@ -10,7 +10,6 @@ export function formatGoldAmount(number) {
         return `${(number / 32.1507).toLocaleString('en-US', options)} kg (${number.toLocaleString('en-US', options)} ozt)`
     } else {
         let result = `${(number / 32150.7).toLocaleString('en-US', options)} t (${number.toLocaleString('en-US', options)} ozt)`
-        console.log(result)
         return result
     }
     
